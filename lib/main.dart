@@ -1,6 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mandrake/providers/buyer_provider.dart';
+import 'package:mandrake/views/buyer/buyer_feed.dart';
+import 'package:mandrake/views/buyer/login_view.dart';
+import 'package:mandrake/views/buyer/signup_view.dart';
+import 'package:mandrake/views/onboarding.dart';
 import 'package:mandrake/views/splash_view.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,22 +21,30 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => BuyerProvider(),
+        ),
+        // ChangeNotifierProvider(
+        //   create: (_) => AdminProvider(),
+        // ),
+      ],
+      child: MaterialApp(
+        title: 'Mandrake',
+        routes: {
+          '/onBoard': (context) => const OnBoarding(),
+          '/login': (context) => const BuyerLoginView(),
+          '/signup': (context) => const BuyerSignUpView(),
+          '/stHomeScreen': (context) => const BuyerFeed(),
+        },
+        theme: ThemeData(
+          fontFamily: GoogleFonts.poppins().fontFamily,
+          scaffoldBackgroundColor: Colors.white,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: const SplashView(),
       ),
-      home: const SplashView(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }

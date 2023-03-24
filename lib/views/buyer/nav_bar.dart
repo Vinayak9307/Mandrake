@@ -17,10 +17,10 @@ class _NavBarState extends State<NavBar> {
   final Widget _stuHomeScreen = const BuyerFeed();
   final Widget _profile = const Profile();
   final Widget _cart = const Cart();
-  bool isLoading = true;
 
   List<Widget>? screens;
   User? user = FirebaseAuth.instance.currentUser;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -42,13 +42,6 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Scaffold(
-          backgroundColor: Colors.white,
-          body: Center(
-            child: CircularProgressIndicator(),
-          ));
-    }
     return Scaffold(
       body: screens![_selectedIndex],
       bottomNavigationBar: CurvedNavigationBar(
@@ -61,7 +54,6 @@ class _NavBarState extends State<NavBar> {
           Icon(Icons.home, color: Colors.white),
           Icon(Icons.add, color: Colors.white),
           Icon(Icons.person, color: Colors.white),
-          Icon(Icons.notification_important_outlined, color: Colors.white)
         ],
       ),
     );

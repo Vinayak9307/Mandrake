@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 import 'package:mandrake/utils/global_colors.dart';
 import 'package:mandrake/views/onboarding.dart';
 import 'package:mandrake/views/seller/seller_nav_bar.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/buyer_provider.dart';
 import 'buyer/nav_bar.dart';
 
 // ignore: camel_case_types
@@ -22,14 +25,11 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-
+    BuyerProvider buyerProvider = Provider.of(context, listen: false);
     Future.wait([
-      getUserData(),
-      Future.delayed(
-        const Duration(milliseconds: 3000),
-      ),
+      getUserData(buyerProvider),
     ]).then((snapshot) {
-      String user = (snapshot.first as String);
+      String user = snapshot.first;
       Widget next = user == "onBoard"
           ? const OnBoarding()
           : user == "user"
@@ -44,14 +44,14 @@ class _SplashViewState extends State<SplashView> {
     });
   }
 
-  Future<String> getUserData() async {
+  Future<String> getUserData(BuyerProvider buyerProvider) async {
     if (FirebaseAuth.instance.currentUser == null) return "onBoard";
     DocumentReference ref = FirebaseFirestore.instance
         .collection('type')
         .doc(FirebaseAuth.instance.currentUser!.uid);
     DocumentSnapshot snap = await ref.get();
     Map<String, dynamic> map = snap.data() as Map<String, dynamic>;
-
+    await buyerProvider.refreshUser();
     return map['type'];
   }
 

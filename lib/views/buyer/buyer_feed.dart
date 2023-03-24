@@ -14,23 +14,32 @@ class BuyerFeed extends StatefulWidget {
 }
 
 class _BuyerFeedState extends State<BuyerFeed> {
+  bool isLoading = true;
+  Buyer? buyer;
   @override
   void initState() {
     super.initState();
+    setState(() {
+      isLoading = true;
+    });
     loadUserData();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  loadUserData() async {
+    BuyerProvider buyerProvider = Provider.of(context, listen: false);
+    await buyerProvider.refreshUser();
+    return "success";
   }
 
   //This method uses the user provider to load the user data
   //when the user comes to the home screen
-  loadUserData() async {
-    BuyerProvider buyerProvider = Provider.of(context, listen: false);
-    await buyerProvider.refreshUser();
-  }
 
   @override
   Widget build(BuildContext context) {
-    Buyer user = Provider.of<BuyerProvider>(context).getBuyer;
-
+    Buyer buyer = Provider.of<BuyerProvider>(context).getBuyer;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: GlobalColor.mainColor,
@@ -43,9 +52,13 @@ class _BuyerFeedState extends State<BuyerFeed> {
         //automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.white,
-      body: const Center(
-        child: Text("hello"),
-      ),
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Center(
+              child: Text(buyer.username!),
+            ),
     );
   }
 }
