@@ -1,4 +1,4 @@
 # Mandrake
 
-A way to develop sustainably.
+An ecommerce app with interconnected selling points.
 
