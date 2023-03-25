@@ -5,6 +5,7 @@ import 'package:mandrake/providers/buyer_provider.dart';
 import 'package:mandrake/views/buyer/buyer_feed.dart';
 import 'package:mandrake/views/buyer/login_view.dart';
 import 'package:mandrake/views/buyer/signup_view.dart';
+import 'package:mandrake/views/buyer/social.dart';
 import 'package:mandrake/views/onboarding.dart';
 import 'package:mandrake/views/splash_view.dart';
 import 'package:provider/provider.dart';
