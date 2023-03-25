@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mandrake/views/buyer/drawer.dart';
 import 'package:provider/provider.dart';
 import '../../model/buyer.dart';
 import '../../providers/buyer_provider.dart';
@@ -24,11 +25,22 @@ class _ProfileState extends State<Profile> {
   String roomNo = "";
 
   late TextEditingController controller;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     Buyer buyer = Provider.of<BuyerProvider>(context).getBuyer;
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: const [
+              Drawerr(),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         title: const Text("Profile"),
         centerTitle: true,
@@ -36,7 +48,7 @@ class _ProfileState extends State<Profile> {
         backgroundColor: const Color(0xFF0C9869),
         leading: IconButton(
           icon: SvgPicture.asset("assets/images/menu.svg"),
-          onPressed: () {},
+          onPressed: () => _scaffoldKey.currentState!.openDrawer(),
         ),
       ),
       body: GestureDetector(
@@ -121,7 +133,6 @@ class _ProfileState extends State<Profile> {
                 height: 30,
               ),
 
-              
               Card(
                 elevation: 5,
                 child: ListTile(
@@ -149,7 +160,6 @@ class _ProfileState extends State<Profile> {
                 height: 30,
               ),
 
-              
               Card(
                 elevation: 5,
                 child: ListTile(

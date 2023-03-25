@@ -2,25 +2,28 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+// ignore: library_prefixes
+// import '../buyer/drawer.dart' as Drawer;
 import '../../utils/button_global.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/utils.dart';
 
-class CreatePost extends StatefulWidget {
-  const CreatePost({super.key});
+class AddCatalogue extends StatefulWidget {
+  const AddCatalogue({super.key});
 
   @override
-  State<CreatePost> createState() => _CreatePostState();
+  State<AddCatalogue> createState() => _AddCatalogueState();
 }
 
-class _CreatePostState extends State<CreatePost> {
+class _AddCatalogueState extends State<AddCatalogue> {
   String? selectedCategory = '';
   String? title = '';
   String? description = '';
   final List<Uint8List> _imgList = [];
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
+
+  String? count = "";
 
   void showImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
@@ -43,7 +46,7 @@ class _CreatePostState extends State<CreatePost> {
           elevation: 0,
           centerTitle: true,
           title: const Text(
-            "Ask for Help",
+            "Add to Catalogue",
             style: TextStyle(
               fontSize: 22,
               color: Colors.white,
@@ -63,7 +66,7 @@ class _CreatePostState extends State<CreatePost> {
                     height: 20,
                   ),
                   const Text(
-                    "Title",
+                    "Specimen Name",
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: 20,
@@ -89,7 +92,7 @@ class _CreatePostState extends State<CreatePost> {
                       });
                     },
                     decoration: InputDecoration(
-                      hintText: "Add title",
+                      hintText: "Add name",
                       focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
                         borderSide: const BorderSide(
@@ -196,6 +199,77 @@ class _CreatePostState extends State<CreatePost> {
                     height: 20,
                   ),
                   const Text(
+                    "Add count",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const Text(
+                    "Count of the specimen you currently have",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color.fromARGB(255, 109, 107, 107),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    minLines: 1,
+                    maxLines: 4,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Count can't be left empty.";
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        count = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Add count",
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 159, 158, 158),
+                          width: 1.1,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 159, 158, 158),
+                          width: 1.1,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 159, 158, 158),
+                          width: 1.1,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 159, 158, 158),
+                          width: 1.1,
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.only(top: 13, left: 8),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
                     "Add photo",
                     textAlign: TextAlign.start,
                     style: TextStyle(
@@ -261,15 +335,7 @@ class _CreatePostState extends State<CreatePost> {
             ),
           ),
         ),
-        drawer: Drawer(
-          child: SingleChildScrollView(
-            child: Column(
-              children: const [
-                //Drawer(),
-              ],
-            ),
-          ),
-        ),
+        drawer: const Drawer(),
       ),
     );
   }
