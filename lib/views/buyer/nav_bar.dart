@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mandrake/views/buyer/profile.dart';
 import '../../utils/global_colors.dart';
+import 'ask_help.dart';
 import 'buyer_feed.dart';
-import 'cart.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -15,8 +15,8 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
   final Widget _stuHomeScreen = const BuyerFeed();
-  final Widget _profile = const Profile();
-  final Widget _cart = const Cart();
+  final Widget _profile = const CreatePost();
+  final Widget _cart = const Profile();
 
   List<Widget>? screens;
   User? user = FirebaseAuth.instance.currentUser;
