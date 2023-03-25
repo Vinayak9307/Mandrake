@@ -5,6 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import '../../firebase_resources/auth_methods.dart';
+import '../../firebase_resources/storage_methods.dart';
 import '../../model/buyer.dart';
 import '../../providers/buyer_provider.dart';
 import '../../utils/utils.dart';
@@ -18,12 +20,26 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   String? profileURL = "";
-  String tempHostel = "";
-  String tempRoom = "";
-  String hostel = "";
-  String roomNo = "";
+  String tempPhoneNo = "";
+  String tempAddress = "";
+  String phoneNo = "";
+  String address = "";
 
-  late TextEditingController controller;
+  late TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Buyer buyer = Provider.of<BuyerProvider>(context).getBuyer;
+    // tempPhoneNo = buyer.phoneNo!;
+    // tempAddress = buyer.address!;
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,14 +83,17 @@ class _ProfileState extends State<Profile> {
                       // top: 60,
                       bottom: 0,
                       child: Stack(children: [
-                        Container(
-                          child: const CircleAvatar(
-                            radius: 60,
-                            backgroundImage: AssetImage(
-                              "assets/images/index.png",
-                            ),
-                          ),
-                        ),
+                        buyer.profileURL != null && buyer.profileURL != ""
+                            ? CircleAvatar(
+                                radius: 60,
+                                backgroundImage:
+                                    NetworkImage(buyer.profileURL!),
+                              )
+                            : const CircleAvatar(
+                                radius: 60,
+                                backgroundImage:
+                                    AssetImage("assets/images/index.png"),
+                              ),
                         Positioned(
                           bottom: 0,
                           right: 0,
@@ -91,7 +110,7 @@ class _ProfileState extends State<Profile> {
                                 color: Colors.white,
                               ),
                               onTap: () {
-                                uploadImage();
+                                uploadImage(buyer);
                               },
                             ),
                           ),
@@ -121,7 +140,6 @@ class _ProfileState extends State<Profile> {
                 height: 30,
               ),
 
-              
               Card(
                 elevation: 5,
                 child: ListTile(
@@ -138,7 +156,7 @@ class _ProfileState extends State<Profile> {
                   trailing: GestureDetector(
                     child: const Icon(Icons.edit),
                     onTap: () async {
-                      await _onEditPressed(1);
+                      await _onEditPressed(1, buyer);
                     },
                   ),
                 ),
@@ -149,7 +167,6 @@ class _ProfileState extends State<Profile> {
                 height: 30,
               ),
 
-              
               Card(
                 elevation: 5,
                 child: ListTile(
@@ -164,7 +181,7 @@ class _ProfileState extends State<Profile> {
                   trailing: GestureDetector(
                     child: const Icon(Icons.edit),
                     onTap: () async {
-                      await _onEditPressed(2);
+                      await _onEditPressed(2, buyer);
                     },
                   ),
                 ),
@@ -216,37 +233,37 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Future<String?> _onEditPressed(var flag) =>
+  Future<String?> _onEditPressed(var flag, Buyer buyer) =>
 
-      //a pop up box would be opened for the user to write the new hostel name or Room no
+      //a pop up box would be opened for the user to write the new phoneNo name or Room no
       showDialog<String>(
           context: context,
           builder: (context) => AlertDialog(
                 title: flag == 1
-                    ? const Text('Hostel name')
-                    : const Text('Room No.'),
+                    ? const Text('Mobile No')
+                    : const Text('Address '),
 
-                //this is the text field for filling the new hostel name or Room no
+                //this is the text field for filling the new phoneNo name or Room no
                 content: flag == 1
                     ? TextField(
                         autofocus: true,
                         decoration:
-                            const InputDecoration(hintText: 'Enter Room No.'),
-                        //controller: controller,
+                            const InputDecoration(hintText: 'Enter mobile no'),
+                        controller: controller,
                         onChanged: (value) {
                           setState(() {
-                            hostel = value;
+                            tempPhoneNo = value;
                           });
                         },
                       )
                     : TextField(
                         autofocus: true,
                         decoration:
-                            const InputDecoration(hintText: 'Enter Room No.'),
-                        //controller: controller,
+                            const InputDecoration(hintText: 'Enter address '),
+                        controller: controller,
                         onChanged: (value) {
                           setState(() {
-                            tempRoom = value;
+                            tempAddress = value;
                           });
                         },
                       ),
@@ -256,20 +273,23 @@ class _ProfileState extends State<Profile> {
                   TextButton(
                     child: const Text('Submit'),
                     onPressed: () {
-                      submit();
+                      submit(flag, buyer);
                     },
                   ),
                 ],
               ));
 
-  void submit() {
-    setState(() {
-      hostel = tempHostel;
-      roomNo = tempRoom;
-    });
-    // AuthMethods().changeState("hostel", hostel, userMap);
-    // AuthMethods().changeState("roomNo", roomNo, userMap);
-    // loadUserData();
+  void submit(var flag, Buyer buyer) async {
+    if (flag == 1) {
+      phoneNo = tempPhoneNo;
+    } else if (flag == 2) {
+      address = tempAddress;
+    }
+    Map<String, dynamic> map = buyer.getData();
+
+    AuthMethods().changeState('users', "phoneNo", phoneNo, map);
+    AuthMethods().changeState("users", "address", address, map);
+    loadUserData();
     Navigator.of(context).pop(controller.text);
     controller.clear();
   }
@@ -279,13 +299,14 @@ class _ProfileState extends State<Profile> {
     await userProvider.refreshUser();
   }
 
-  uploadImage() async {
+  uploadImage(Buyer buyer) async {
     Uint8List im = await pickImage(ImageSource.gallery);
-    // String tempProfileURL = await StorageMethods()
-    //     .uploadImageToStorage("profilePic", im, false, null);
-    // setState(() {
-    //   profileURL = tempProfileURL;
-    //   AuthMethods().changeState("profileURL", profileURL!, userMap);
-    // });
+    String tempProfileURL = await StorageMethods()
+        .uploadImageToStorage("profilePic", im, false, null);
+    setState(() {
+      profileURL = tempProfileURL;
+      AuthMethods()
+          .changeState("users", "profileURL", profileURL!, buyer.getData());
+    });
   }
 }

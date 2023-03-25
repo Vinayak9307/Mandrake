@@ -15,8 +15,8 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
   final Widget _stuHomeScreen = const BuyerFeed();
-  final Widget _profile = const CreatePost();
-  final Widget _cart = const Profile();
+  final Widget _createPost = const CreatePost();
+  final Widget _profile = const Profile();
 
   List<Widget>? screens;
   User? user = FirebaseAuth.instance.currentUser;
@@ -28,7 +28,7 @@ class _NavBarState extends State<NavBar> {
     setState(() {
       screens = [
         _stuHomeScreen,
-        _cart,
+        _createPost,
         _profile,
       ];
     });

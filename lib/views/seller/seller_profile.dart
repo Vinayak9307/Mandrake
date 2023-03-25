@@ -331,7 +331,7 @@ class _SellerProfileState extends State<SellerProfile> {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Padding(

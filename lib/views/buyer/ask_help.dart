@@ -2,7 +2,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mandrake/model/request.dart';
+import 'package:mandrake/providers/buyer_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
+import '../../firebase_resources/firestore_methods.dart';
+import '../../model/buyer.dart';
 import '../../utils/button_global.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/utils.dart';
@@ -33,8 +39,43 @@ class _CreatePostState extends State<CreatePost> {
     });
   }
 
+  void addRequest(user, images) async {
+    setState(() {
+      isLoading = true;
+    });
+    String res = "Some Error Occured";
+
+    if (user!.address!.isNotEmpty) {
+      String reqId = const Uuid().v1();
+
+      res = await FirestoreMethods().addHelpRequest(
+        request: Request(
+            uid: user!.getData()['uid'],
+            reqId: reqId,
+            email: user!.getData()['email'],
+            address: user!.getData()['address'],
+            title: title!,
+            description: description!,
+            filingTime: DateTime.now(),
+            images: [],
+            name: user!.getData()['username'],
+            accepted: false),
+        images: _imgList,
+      );
+    } else {
+      showSnackBar(context,
+          "Please fill the address and room no details in profile section !");
+    }
+
+    print(res);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    Buyer buyer = Provider.of<BuyerProvider>(context).getBuyer;
     return GestureDetector(
       onTap: () => {FocusScope.of(context).requestFocus(FocusNode())},
       child: Scaffold(
@@ -248,7 +289,7 @@ class _CreatePostState extends State<CreatePost> {
                     text: "Post",
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        //addComplaint();
+                        addRequest(buyer, _imgList);
                       }
                     },
                     isLoading: isLoading,

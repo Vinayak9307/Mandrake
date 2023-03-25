@@ -1,6 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mandrake/views/seller/catalogue.dart';
+import 'package:mandrake/views/seller/seller_help_req.dart';
 import 'package:mandrake/views/seller/seller_profile.dart';
 import '../../utils/global_colors.dart';
 import '../buyer/cart.dart';
@@ -16,7 +18,8 @@ class _SellerNavBarState extends State<SellerNavBar> {
   int _selectedIndex = 0;
   final Widget _catalog = const Catalogue();
   final Widget _profile = const SellerProfile();
-  final Widget _cart = const Cart();
+  final Widget _seller_help_req = const HelpRequestPage();
+  final Widget _addCatalogue = const Cart();
 
   List<Widget>? screens;
   User? user = FirebaseAuth.instance.currentUser;
@@ -28,7 +31,8 @@ class _SellerNavBarState extends State<SellerNavBar> {
     setState(() {
       screens = [
         _catalog,
-        _cart,
+        _addCatalogue,
+        _seller_help_req,
         _profile,
       ];
     });
@@ -53,6 +57,10 @@ class _SellerNavBarState extends State<SellerNavBar> {
         items: const [
           Icon(Icons.home, color: Colors.white),
           Icon(Icons.add, color: Colors.white),
+          Icon(
+            Icons.help_center_outlined,
+            color: Colors.white,
+          ),
           Icon(Icons.person, color: Colors.white),
         ],
       ),

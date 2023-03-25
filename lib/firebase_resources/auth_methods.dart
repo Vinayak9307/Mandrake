@@ -156,6 +156,8 @@ class AuthMethods {
     String res = "Some Error Occured";
     try {
       userMap[key] = value;
+      print(key);
+      print(value);
       await _firestore.collection(collection).doc(userMap['uid']).set(userMap);
       res = "Update Success";
     } catch (err) {
