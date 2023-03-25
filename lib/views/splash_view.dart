@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
 import 'package:mandrake/utils/global_colors.dart';
 import 'package:mandrake/views/onboarding.dart';
 import 'package:mandrake/views/seller/seller_nav_bar.dart';
@@ -47,6 +46,7 @@ class _SplashViewState extends State<SplashView> {
 
   Future<String> getUserData(BuyerProvider buyerProvider) async {
     if (FirebaseAuth.instance.currentUser == null) return "onBoard";
+    print(FirebaseAuth.instance.currentUser!.uid);
     DocumentReference ref = FirebaseFirestore.instance
         .collection('type')
         .doc(FirebaseAuth.instance.currentUser!.uid);

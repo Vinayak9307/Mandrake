@@ -45,18 +45,20 @@ class _BuyerLoginViewState extends State<BuyerLoginView> {
       isLoading = false;
     });
     if (res != "Log In Success") {
-      // ignore: use_build_context_synchronously
-      showSnackBar(context, res);
+      setState(() {
+        showSnackBar(context, res);
+      });
     } else {
       print("go to feed");
-      //ignore: use_build_context_synchronously
-      Navigator.pop(context, '/onBoard');
-
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const NavBar()),
-      );
+      setState(() {
+        Navigator.pop(context, '/onBoard');
+      });
+      setState(() {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const NavBar()),
+        );
+      });
     }
   }
 

@@ -35,19 +35,21 @@ class _SellerLoginViewState extends State<SellerLoginView> {
     setState(() {
       isLoading = true;
     });
-    String res = await AuthMethods().loginUser(
+
+    String res = await AuthMethods().loginAdmin(
       email: email!,
       password: password!,
     );
-    // ignore: use_build_context_synchronously
-    BuyerProvider buyerProvider = Provider.of(context, listen: false);
-    await buyerProvider.refreshUser();
+    // // ignore: use_build_context_synchronously
+    // BuyerProvider buyerProvider = Provider.of(context, listen: false);
+    // await buyerProvider.refreshUser();
     setState(() {
       isLoading = false;
     });
     if (res != "Log In Success") {
-      // ignore: use_build_context_synchronously
-      showSnackBar(context, res);
+      setState(() {
+        showSnackBar(context, res);
+      });
     } else {
       print("go to feed");
       //ignore: use_build_context_synchronously

@@ -158,4 +158,22 @@ class AuthMethods {
     print(res);
     return res;
   }
+
+  loginAdmin({required String email, required String password}) async {
+    String res = "Some Error Occurred";
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        res = "Log In Success";
+      } else {
+        res = "Enter email and password";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
 }
