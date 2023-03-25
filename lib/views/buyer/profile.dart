@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mandrake/utils/drop_down_items.dart';
 import 'package:provider/provider.dart';
-
-import '../../firebase_resources/auth_methods.dart';
+import '../../model/buyer.dart';
 import '../../providers/buyer_provider.dart';
-import '../../utils/global_colors.dart';
 import '../../utils/utils.dart';
 
 class Profile extends StatefulWidget {
@@ -30,6 +27,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    Buyer buyer = Provider.of<BuyerProvider>(context).getBuyer;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
@@ -103,7 +101,7 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
               ),
-              Text("Vinayak",
+              Text(buyer.username!,
                   style: TextStyle(
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontSize: 18)),
@@ -111,7 +109,7 @@ class _ProfileState extends State<Profile> {
               const SizedBox(
                 height: 5,
               ),
-              Text("vinayak1289@gmail.com",
+              Text(buyer.email!,
                   style: TextStyle(
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontSize: 18)),
@@ -131,7 +129,7 @@ class _ProfileState extends State<Profile> {
                     Icons.phone,
                     size: 30,
                   ),
-                  subtitle: Text(hostel,
+                  subtitle: Text(buyer.phoneNo!,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   title: const Text(
@@ -159,7 +157,7 @@ class _ProfileState extends State<Profile> {
                     Icons.home,
                     size: 30,
                   ),
-                  subtitle: Text(roomNo,
+                  subtitle: Text(buyer.address!,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   title: const Text('Address'),
@@ -188,7 +186,7 @@ class _ProfileState extends State<Profile> {
                           backgroundColor: const Color(0xFF0C9869),
                         ),
                         child: const Text(
-                          "data",
+                          "Orders",
                           style: TextStyle(fontSize: 18),
                         ),
                       ),
@@ -203,7 +201,7 @@ class _ProfileState extends State<Profile> {
                           backgroundColor: const Color(0xFF0C9869),
                         ),
                         child: const Text(
-                          "data",
+                          "Cart",
                           style: TextStyle(fontSize: 18),
                         ),
                       ),

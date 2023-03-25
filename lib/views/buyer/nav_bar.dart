@@ -29,8 +29,8 @@ class _NavBarState extends State<NavBar> {
     setState(() {
       screens = [
         _stuHomeScreen,
-        _profile,
         _cart,
+        _profile,
       ];
     });
   }
