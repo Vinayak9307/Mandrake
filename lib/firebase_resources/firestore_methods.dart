@@ -2,10 +2,16 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mandrake/firebase_resources/auth_methods.dart';
 import 'package:mandrake/firebase_resources/storage_methods.dart';
+import 'package:mandrake/model/catalogue_item.dart';
 import 'package:mandrake/model/order.dart';
 import 'package:mandrake/model/request.dart';
+import 'package:mandrake/views/seller/add_to_catalogue.dart';
+import 'package:mandrake/views/seller/catalogue.dart';
 import 'package:uuid/uuid.dart';
+
+import '../model/seller.dart';
 
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -82,6 +88,52 @@ class FirestoreMethods {
           .collection('requests')
           .doc(request1.reqId)
           .set(request1.getData());
+
+      res = "Upload Success";
+    } catch (err) {
+      res = err.toString();
+    }
+
+    return res;
+  }
+
+  Future<String> addCatalogue(
+      {required CatalogueItem catalogue,
+      required Uint8List images,
+      required Seller seller}) async {
+    String res = "Some error occured";
+    Map<String, dynamic> compMap = catalogue.getData();
+    var uid = compMap['uid'];
+    var itemName = compMap['itemName'];
+    var sellerId = compMap['sellerId'];
+    var sellerInfo = compMap['sellerInfo'];
+    var description = compMap['description'];
+    String imgURL = compMap['profileURL'];
+    int quantity = compMap['quantity'];
+    int price = compMap['price'];
+
+    try {
+      imgURL = await StorageMethods()
+          .uploadImageToStorage('complaints', images, false, null);
+
+      CatalogueItem catalogueItem = CatalogueItem(
+        uid: uid,
+        itemName: itemName,
+        profileURL: imgURL,
+        description: description,
+        quantity: quantity,
+        sellerId: sellerId,
+        sellerInfo: sellerInfo,
+        price: price,
+      );
+
+      await _firestore
+          .collection('catalogueItem')
+          .doc(catalogueItem.uid)
+          .set(catalogueItem.getData());
+      List catList = seller.catalog!;
+      catList.add(catalogueItem.uid);
+      AuthMethods().changeState("seller", "catalog", catList, seller.getData());
 
       res = "Upload Success";
     } catch (err) {

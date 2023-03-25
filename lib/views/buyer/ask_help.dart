@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mandrake/model/request.dart';
 import 'package:mandrake/providers/buyer_provider.dart';
@@ -12,6 +13,7 @@ import '../../model/buyer.dart';
 import '../../utils/button_global.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/utils.dart';
+import 'drawer.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -27,6 +29,7 @@ class _CreatePostState extends State<CreatePost> {
   final List<Uint8List> _imgList = [];
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void showImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
@@ -79,19 +82,16 @@ class _CreatePostState extends State<CreatePost> {
     return GestureDetector(
       onTap: () => {FocusScope.of(context).requestFocus(FocusNode())},
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
-          backgroundColor: GlobalColor.mainColor,
-          elevation: 0,
-          centerTitle: true,
-          title: const Text(
-            "Ask for Help",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.white,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
+            title: const Text("Ask for Help"),
+            centerTitle: true,
+            elevation: 0,
+            backgroundColor: GlobalColor.mainColor,
+            leading: IconButton(
+              onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+              icon: SvgPicture.asset("assets/icons/menu.svg"),
+            )),
         body: SingleChildScrollView(
           child: Form(
             key: formKey,
@@ -306,7 +306,7 @@ class _CreatePostState extends State<CreatePost> {
           child: SingleChildScrollView(
             child: Column(
               children: const [
-                //Drawer(),
+                Drawerr(),
               ],
             ),
           ),

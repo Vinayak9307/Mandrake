@@ -1,17 +1,17 @@
 // This class is used as the user model class
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CatalogItem {
+class CatalogueItem {
   String? uid;
   String? itemName;
   String? profileURL;
   String? sellerInfo;
   String? sellerId;
   String? description;
-  String? quantity;
-  String? price;
+  int? quantity;
+  int? price;
 
-  CatalogItem({
+  CatalogueItem({
     this.uid,
     this.itemName,
     this.sellerInfo,
@@ -35,10 +35,10 @@ class CatalogItem {
       };
 
   //This method returns a user instance based on the document snapshot given by firebase authentication
-  static CatalogItem getCatalogItem(DocumentSnapshot snap) {
+  static CatalogueItem getCatalogueItem(DocumentSnapshot snap) {
     Map<String, dynamic> map = snap.data() as Map<String, dynamic>;
 
-    return CatalogItem(
+    return CatalogueItem(
       uid: map['uid'],
       itemName: map['itemName'],
       sellerInfo: map['sellerInfo'],

@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 import '../views/buyer/item_detail.dart';
 import '../views/seller/catalogue_item_detail.dart';
@@ -7,8 +10,8 @@ import '../views/seller/seller_help_req_detail.dart';
 import 'global_colors.dart';
 
 class CatalogueCard extends StatelessWidget {
-  const CatalogueCard({super.key});
-
+  const CatalogueCard({super.key, this.snap});
+  final snap;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,17 +44,17 @@ class CatalogueCard extends StatelessWidget {
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10))),
-                child: const Text(
-                  'Species name',
+                child: Text(
+                  snap['itemName'],
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.3 - 60,
                 width: MediaQuery.of(context).size.width * 0.8,
-                child: Image.asset(
-                  "assets/images/img.png",
-                  fit: BoxFit.fill,
+                child: Image.network(
+                  snap['profileURL'],
+                  fit: BoxFit.cover,
                 ),
               ),
               Container(
@@ -72,13 +75,13 @@ class CatalogueCard extends StatelessWidget {
                         bottomRight: Radius.circular(10))),
                 child: Row(
                   children: <Widget>[
-                    const Text(
-                      'Quantity-10',
+                    Text(
+                      snap['quantity'].toString(),
                       style: TextStyle(fontSize: 17),
                     ),
                     const Spacer(),
                     Text(
-                      'Price-100',
+                      "Price ${snap['price']}",
                       style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
@@ -102,9 +105,9 @@ class HelpCardView extends StatelessWidget {
   const HelpCardView({
     super.key,
     // required this.snap,
-    // this.user,
+    this.snap,
   });
-  // final snap;
+  final snap;
   // final user;
   static bool pressed = false;
 
@@ -118,7 +121,9 @@ class HelpCardView extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const HelpCardDetailView()));
+                  builder: (context) => HelpCardDetailView(
+                        snap: snap,
+                      )));
           // Navigator.push(
           //     context,
           //     MaterialPageRoute(
@@ -142,49 +147,46 @@ class HelpCardView extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  "snap['title']",
+                child: Text(
+                  snap['title'],
                   textAlign: TextAlign.start,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 30,
                     color: Color.fromARGB(255, 60, 58, 58),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
-              Row(
-                children: const [
-                  Text(
-                    "ordered by  -  ",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(255, 78, 76, 76),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    "snap['email']",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(255, 78, 76, 76),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+              const Text(
+                "Posted by  -  ",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color.fromARGB(255, 78, 76, 76),
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                snap['email'],
+                textAlign: TextAlign.start,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Color.fromARGB(255, 78, 76, 76),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               Row(
-                children: const [
+                children: [
                   Icon(Icons.timeline),
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
                   Text(
-                    //"DateFormat.yMMMd().format( snap['filingTime'].toDate(),)",
-                    "date",
+                    DateFormat.yMMMd().format(
+                      snap['filingTime'].toDate(),
+                    ),
                     textAlign: TextAlign.start,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 78, 76, 76),
                       fontWeight: FontWeight.w600,
@@ -205,12 +207,13 @@ class HelpCardView extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Container(
                       alignment: Alignment.centerLeft,
-                      child: const Text(
+                      child: Text(
+                        snap['address'],
                         //"DateFormat.yMMMd().format( snap['filingTime'].toDate(),)",
-                        "addressaddressaddressaddressaddressaddressaddressaddressaddressaddressaddressaddressaddress",
+                        // "addressaddressaddressaddressaddressaddressaddressaddressaddressaddressaddressaddressaddress",
                         maxLines: 3,
                         textAlign: TextAlign.start,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Color.fromARGB(255, 78, 76, 76),
                           fontWeight: FontWeight.w600,
@@ -225,13 +228,12 @@ class HelpCardView extends StatelessWidget {
               ),
               Container(
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  // snap['description'].substring(
-                  //         0, min((snap['description'] as String).length, 40)) +
-                  //     "...",
-                  "description...",
+                child: Text(
+                  snap['description'].substring(
+                          0, min((snap['description'] as String).length, 40)) +
+                      "...",
                   textAlign: TextAlign.start,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Color.fromARGB(255, 52, 51, 51),
                     fontWeight: FontWeight.w400,

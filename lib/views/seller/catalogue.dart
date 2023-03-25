@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mandrake/utils/allCards.dart';
@@ -11,10 +12,21 @@ class Catalogue extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: ListView.builder(
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            return const CatalogueCard();
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('catalogueItem')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return CatalogueCard(snap: snapshot.data!.docs[index].data());
+                });
           }),
     );
   }

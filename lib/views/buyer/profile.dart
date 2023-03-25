@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mandrake/views/buyer/drawer.dart';
 import 'package:provider/provider.dart';
 import '../../firebase_resources/auth_methods.dart';
 import '../../firebase_resources/storage_methods.dart';
@@ -35,6 +36,7 @@ class _ProfileState extends State<Profile> {
     // tempAddress = buyer.address!;
   }
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void dispose() {
     controller.dispose();
@@ -45,6 +47,16 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     Buyer buyer = Provider.of<BuyerProvider>(context).getBuyer;
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: const [
+              Drawerr(),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         title: const Text("Profile"),
         centerTitle: true,
@@ -52,7 +64,7 @@ class _ProfileState extends State<Profile> {
         backgroundColor: const Color(0xFF0C9869),
         leading: IconButton(
           icon: SvgPicture.asset("assets/images/menu.svg"),
-          onPressed: () {},
+          onPressed: () => _scaffoldKey.currentState!.openDrawer(),
         ),
       ),
       body: GestureDetector(

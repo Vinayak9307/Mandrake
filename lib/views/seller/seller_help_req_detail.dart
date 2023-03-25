@@ -7,9 +7,9 @@ import 'package:mandrake/utils/global_colors.dart';
 class HelpCardDetailView extends StatelessWidget {
   const HelpCardDetailView({
     super.key,
-    // required this.snap,
+    required this.snap,
   });
-  //final snap;
+  final snap;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class HelpCardDetailView extends StatelessWidget {
       appBar: AppBar(
         leading: const BackButton(color: Colors.white),
         backgroundColor: GlobalColor.mainColor,
-        title: const Text('Query Detail',
+        title: const Text('Request Detail',
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.w600)),
         centerTitle: true,
@@ -34,10 +34,10 @@ class HelpCardDetailView extends StatelessWidget {
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "snap['title']",
+                    child: Text(
+                      snap['title'],
                       textAlign: TextAlign.start,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 30,
                         color: Color.fromARGB(255, 60, 58, 58),
                         fontWeight: FontWeight.w700,
@@ -54,11 +54,11 @@ class HelpCardDetailView extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const Text(
-                    '  ' + "snap['email']",
+                  Text(
+                    '  ' + snap['email'],
                     //"prashant.2022ca067@mnnit,ac.in",
                     textAlign: TextAlign.start,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 78, 76, 76),
                       fontWeight: FontWeight.w600,
@@ -77,30 +77,13 @@ class HelpCardDetailView extends StatelessWidget {
                     ),
                   ),
                   Row(
-                    children: const [
+                    children: [
                       Text(
-                        '  ' +
-                            "DateFormat.yMMMd().format(['filingTime'].toDate(),)",
+                        '  ${DateFormat.yMMMd().format(
+                          snap['filingTime'].toDate(),
+                        )}',
                         textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color.fromARGB(255, 78, 76, 76),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        " in ",
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color.fromARGB(255, 78, 76, 76),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        "snap['hostel']",
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Color.fromARGB(255, 78, 76, 76),
                           fontWeight: FontWeight.w600,
@@ -125,10 +108,10 @@ class HelpCardDetailView extends StatelessWidget {
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "snap['description'].substring(0, min((snap['description'] as String).length, 40))",
+                    child: Text(
+                      snap['description'],
                       textAlign: TextAlign.start,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 52, 51, 51),
                         fontWeight: FontWeight.w400,

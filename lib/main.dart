@@ -11,6 +11,7 @@ import 'package:mandrake/views/buyer/profile.dart';
 //import 'package:mandrake/views/buyer/profile.dart';
 import 'package:mandrake/views/buyer/signup_view.dart';
 import 'package:mandrake/views/onboarding.dart';
+import 'package:mandrake/views/seller/add_to_catalogue.dart';
 import 'package:mandrake/views/seller/orders_page.dart';
 import 'package:mandrake/views/seller/seller_help_req.dart';
 import 'package:mandrake/views/seller/seller_profile.dart';

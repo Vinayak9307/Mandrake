@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mandrake/utils/global_colors.dart';
 
@@ -42,14 +43,23 @@ class _HelpRequestPageState extends State<HelpRequestPage> {
         //automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.white,
-      body: ListView.builder(
-          // itemCount: snapshot.data!.docs.length,
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return const HelpCardView(
-                //snap: snapshot.data!.docs[index].data(),
-                //user: user,
-                );
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('requests').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ListView.builder(
+                // itemCount: snapshot.data!.docs.length,
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return HelpCardView(
+                    snap: snapshot.data!.docs[index].data(),
+                    //user: user,
+                  );
+                });
           }),
       // body: StreamBuilder(
       //   stream: FirebaseFirestore.instance.collection('complaints').snapshots(),
