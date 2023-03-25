@@ -4,8 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mandrake/providers/buyer_provider.dart';
 import 'package:mandrake/views/buyer/buyer_feed.dart';
 import 'package:mandrake/views/buyer/login_view.dart';
+import 'package:mandrake/views/buyer/profile.dart';
 import 'package:mandrake/views/buyer/signup_view.dart';
 import 'package:mandrake/views/onboarding.dart';
+import 'package:mandrake/views/seller/profile.dart';
 import 'package:mandrake/views/splash_view.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const SplashView(),
+        home: const Profile(),
       ),
     );
   }
