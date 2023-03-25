@@ -225,3 +225,20 @@
 //     });
 //   }
 // }
+import 'package:flutter/cupertino.dart';
+
+class SellerProfile extends StatefulWidget {
+  const SellerProfile({super.key});
+
+  @override
+  State<SellerProfile> createState() => _SellerProfileState();
+}
+
+class _SellerProfileState extends State<SellerProfile> {
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text("Cataloge"),
+    );
+  }
+}

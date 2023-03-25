@@ -16,6 +16,10 @@ class Seller {
   int? sizeOfNursery;
   int? variety;
   bool? approved;
+  List? catalog;
+  String? country;
+  String? city;
+  String? state;
 
   Seller({
     this.uid,
@@ -32,6 +36,10 @@ class Seller {
     this.sizeOfNursery,
     this.variety,
     this.approved,
+    this.catalog,
+    this.country,
+    this.state,
+    this.city,
   });
 
   //This function returns a map of data related to the user object
@@ -50,6 +58,10 @@ class Seller {
         "variety": variety,
         "sizeOfNursery": sizeOfNursery,
         "approved": approved,
+        "catalog": catalog,
+        "country": country,
+        "state": state,
+        "city": city,
       };
 
   //This method returns a user instance based on the document snapshot given by firebase authentication
@@ -71,6 +83,10 @@ class Seller {
       variety: map['variety'],
       sizeOfNursery: map['sizeOfNursery'],
       approved: map['approved'],
+      catalog: map['catalog'],
+      country: map['country'],
+      state: map['state'],
+      city: map['city'],
     );
   }
 }

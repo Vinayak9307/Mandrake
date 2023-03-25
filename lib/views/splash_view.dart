@@ -9,6 +9,7 @@ import 'package:mandrake/views/seller/seller_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/buyer_provider.dart';
+import '../providers/seller_provider.dart';
 import 'buyer/nav_bar.dart';
 
 // ignore: camel_case_types
@@ -25,8 +26,9 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
     BuyerProvider buyerProvider = Provider.of(context, listen: false);
+    SellerProvider sellerProvider = Provider.of(context, listen: false);
     Future.wait([
-      getUserData(buyerProvider),
+      getUserData(buyerProvider, sellerProvider),
       Future.delayed(const Duration(milliseconds: 2000)),
     ]).then((snapshot) {
       String user = snapshot.first;
@@ -44,7 +46,8 @@ class _SplashViewState extends State<SplashView> {
     });
   }
 
-  Future<String> getUserData(BuyerProvider buyerProvider) async {
+  Future<String> getUserData(
+      BuyerProvider buyerProvider, SellerProvider sellerProvider) async {
     if (FirebaseAuth.instance.currentUser == null) return "onBoard";
     print(FirebaseAuth.instance.currentUser!.uid);
     DocumentReference ref = FirebaseFirestore.instance
@@ -52,7 +55,12 @@ class _SplashViewState extends State<SplashView> {
         .doc(FirebaseAuth.instance.currentUser!.uid);
     DocumentSnapshot snap = await ref.get();
     Map<String, dynamic> map = snap.data() as Map<String, dynamic>;
-    await buyerProvider.refreshUser();
+
+    if (map['type'] == 'users') {
+      await buyerProvider.refreshUser();
+    } else {
+      await sellerProvider.refreshSeller();
+    }
     return map['type'];
   }
 

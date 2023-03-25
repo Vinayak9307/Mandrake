@@ -45,6 +45,8 @@ dependencies:
   url_launcher: ^6.1.10
   comment_box: ^0.0.18
   flutter_slidable: ^2.0.0
+  country_state_city_picker: ^1.2.8
+  upi_india: ^3.0.1
   flutter:
     sdk: flutter
 
