@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mandrake/providers/buyer_provider.dart';
 import 'package:mandrake/views/buyer/buyer_feed.dart';
+import 'package:mandrake/views/buyer/create_post.dart';
 import 'package:mandrake/views/buyer/login_view.dart';
 import 'package:mandrake/views/buyer/profile.dart';
 import 'package:mandrake/views/buyer/signup_view.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const Profile(),
+        home: const CreatePost(),
       ),
     );
   }
