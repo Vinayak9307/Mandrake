@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/allCards.dart';
 import '../../utils/global_colors.dart';
+import 'drawer.dart';
 
 class BuyerFeed extends StatefulWidget {
   const BuyerFeed({super.key});
@@ -17,6 +18,7 @@ class BuyerFeed extends StatefulWidget {
 }
 
 class _BuyerFeedState extends State<BuyerFeed> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isLoading = true;
   Buyer? buyer;
   @override
@@ -45,7 +47,17 @@ class _BuyerFeedState extends State<BuyerFeed> {
   Widget build(BuildContext context) {
     Buyer buyer = Provider.of<BuyerProvider>(context).getBuyer;
     return Scaffold(
+      key: _scaffoldKey,
       appBar: buildAppBar(),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: const [
+              Drawerr(),
+            ],
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: isLoading
           ? const Center(
@@ -191,7 +203,7 @@ class _BuyerFeedState extends State<BuyerFeed> {
         elevation: 0,
         backgroundColor: GlobalColor.mainColor,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () => _scaffoldKey.currentState!.openDrawer(),
           icon: SvgPicture.asset("assets/icons/menu.svg"),
         ));
   }

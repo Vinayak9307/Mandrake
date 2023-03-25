@@ -3,8 +3,8 @@ import 'package:mandrake/views/about_page.dart';
 
 import '../../utils/global_colors.dart';
 
-class Drawer extends StatelessWidget {
-  const Drawer({super.key});
+class Drawerr extends StatelessWidget {
+  const Drawerr({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,22 +69,6 @@ class Drawer extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 30),
-        ListTile(
-          leading: const Icon(
-            Icons.person_2_outlined,
-            size: 20,
-          ),
-          title: const Text(
-            'About us',
-            style: TextStyle(fontSize: 20),
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const AboutPage()),
-            );
-          },
-        ),
         const ListTile(
           leading: Icon(
             Icons.logout,
