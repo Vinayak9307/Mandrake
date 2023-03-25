@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mandrake/providers/seller_provider.dart';
 import 'package:provider/provider.dart';
-import '../../model/buyer.dart';
+import '../../firebase_resources/auth_methods.dart';
+import '../../firebase_resources/storage_methods.dart';
+import '../../model/seller.dart';
 import '../../providers/buyer_provider.dart';
 import '../../utils/utils.dart';
 
@@ -22,15 +25,15 @@ class _SellerProfileState extends State<SellerProfile> {
   String address = "";
   String accountNo = "";
   String ifscCode = "";
-  String variety = "";
-  String size = "";
+  int variety = 0;
+  int size = 0;
 
   String tempmobileNo = "";
   String tempaddress = "";
   String tempaccountNo = "";
   String tempifscCode = "";
-  String tempvariety = "";
-  String tempsize = "";
+  int tempvariety = 0;
+  int tempsize = 0;
 
   late TextEditingController controller = TextEditingController();
 
@@ -38,6 +41,13 @@ class _SellerProfileState extends State<SellerProfile> {
   void initState() {
     super.initState();
     controller = TextEditingController();
+    // Seller seller = Provider.of<SellerProvider>(context).getseller;
+    // tempmobileNo = seller.phoneNo!;
+    // tempaddress = seller.address!;
+    // tempaccountNo = seller.bankAccountNumber!;
+    // tempifscCode = seller.ifscCode!;
+    // tempvariety = seller.variety!;
+    // tempsize = seller.sizeOfNursery!;
   }
 
   @override
@@ -48,7 +58,7 @@ class _SellerProfileState extends State<SellerProfile> {
 
   @override
   Widget build(BuildContext context) {
-    //Buyer buyer = Provider.of<BuyerProvider>(context).getBuyer;
+    Seller seller = Provider.of<SellerProvider>(context).getseller;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
@@ -88,14 +98,17 @@ class _SellerProfileState extends State<SellerProfile> {
                       // top: 60,
                       bottom: 0,
                       child: Stack(children: [
-                        Container(
-                          child: const CircleAvatar(
-                            radius: 60,
-                            backgroundImage: AssetImage(
-                              "assets/images/index.png",
-                            ),
-                          ),
-                        ),
+                        seller.profileURL != null && seller.profileURL != ""
+                            ? CircleAvatar(
+                                radius: 60,
+                                backgroundImage:
+                                    NetworkImage(seller.profileURL!),
+                              )
+                            : const CircleAvatar(
+                                radius: 60,
+                                backgroundImage:
+                                    AssetImage("assets/images/index.png"),
+                              ),
                         Positioned(
                           bottom: 0,
                           right: 0,
@@ -112,7 +125,7 @@ class _SellerProfileState extends State<SellerProfile> {
                                 color: Colors.white,
                               ),
                               onTap: () {
-                                uploadImage();
+                                uploadImage(seller);
                               },
                             ),
                           ),
@@ -122,7 +135,7 @@ class _SellerProfileState extends State<SellerProfile> {
                   ],
                 ),
               ),
-              Text("seller.username!",
+              Text(seller.username!,
                   style: TextStyle(
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontSize: 18)),
@@ -130,7 +143,7 @@ class _SellerProfileState extends State<SellerProfile> {
               const SizedBox(
                 height: 5,
               ),
-              Text("seller.email!",
+              Text(seller.email!,
                   style: TextStyle(
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontSize: 18)),
@@ -156,7 +169,7 @@ class _SellerProfileState extends State<SellerProfile> {
                     Icons.phone,
                     size: 30,
                   ),
-                  subtitle: Text(mobileNo,
+                  subtitle: Text(seller.phoneNo!,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   title: const Text(
@@ -165,7 +178,7 @@ class _SellerProfileState extends State<SellerProfile> {
                   trailing: GestureDetector(
                     child: const Icon(Icons.edit),
                     onTap: () async {
-                      await _onEditPressed(1);
+                      await _onEditPressed(1, seller);
                     },
                   ),
                 ),
@@ -184,14 +197,14 @@ class _SellerProfileState extends State<SellerProfile> {
                     Icons.home,
                     size: 30,
                   ),
-                  subtitle: Text(address,
+                  subtitle: Text(seller.address!,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   title: const Text('Address'),
                   trailing: GestureDetector(
                     child: const Icon(Icons.edit),
                     onTap: () async {
-                      await _onEditPressed(2);
+                      await _onEditPressed(2, seller);
                     },
                   ),
                 ),
@@ -214,7 +227,7 @@ class _SellerProfileState extends State<SellerProfile> {
                     Icons.account_balance,
                     size: 30,
                   ),
-                  subtitle: Text(accountNo,
+                  subtitle: Text(seller.bankAccountNumber!,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   title: const Text(
@@ -223,7 +236,7 @@ class _SellerProfileState extends State<SellerProfile> {
                   trailing: GestureDetector(
                     child: const Icon(Icons.edit),
                     onTap: () async {
-                      await _onEditPressed(3);
+                      await _onEditPressed(3, seller);
                     },
                   ),
                 ),
@@ -241,7 +254,7 @@ class _SellerProfileState extends State<SellerProfile> {
                     Icons.account_balance,
                     size: 30,
                   ),
-                  subtitle: Text(ifscCode,
+                  subtitle: Text(seller.ifscCode!,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   title: const Text(
@@ -250,7 +263,7 @@ class _SellerProfileState extends State<SellerProfile> {
                   trailing: GestureDetector(
                     child: const Icon(Icons.edit),
                     onTap: () async {
-                      await _onEditPressed(4);
+                      await _onEditPressed(4, seller);
                     },
                   ),
                 ),
@@ -276,7 +289,7 @@ class _SellerProfileState extends State<SellerProfile> {
                     Icons.account_balance,
                     size: 30,
                   ),
-                  subtitle: Text(variety,
+                  subtitle: Text(seller.variety!.toString(),
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   title: const Text(
@@ -285,7 +298,7 @@ class _SellerProfileState extends State<SellerProfile> {
                   trailing: GestureDetector(
                     child: const Icon(Icons.edit),
                     onTap: () async {
-                      await _onEditPressed(5);
+                      await _onEditPressed(5, seller);
                     },
                   ),
                 ),
@@ -303,16 +316,16 @@ class _SellerProfileState extends State<SellerProfile> {
                     Icons.account_balance,
                     size: 30,
                   ),
-                  subtitle: Text(size,
+                  subtitle: Text(seller.sizeOfNursery!.toString(),
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   title: const Text(
-                    'Size in hectares',
+                    'Size in metresq',
                   ),
                   trailing: GestureDetector(
                     child: const Icon(Icons.edit),
                     onTap: () async {
-                      await _onEditPressed(6);
+                      await _onEditPressed(6, seller);
                     },
                   ),
                 ),
@@ -368,7 +381,7 @@ class _SellerProfileState extends State<SellerProfile> {
     );
   }
 
-  Future<String?> _onEditPressed(var flag) =>
+  Future<String?> _onEditPressed(var flag, Seller seller) =>
 
       //a pop up box would be opened for the user to write the new hostel name or Room no
       showDialog<String>(
@@ -376,17 +389,18 @@ class _SellerProfileState extends State<SellerProfile> {
           builder: (context) => AlertDialog(
                 // /
                 title: flag == 1
-                    ? Text("Mobile No.")
+                    ? const Text("Mobile No.")
                     : (flag == 2
-                        ? Text("Address")
+                        ? const Text("Address")
                         : (flag == 3
-                            ? Text("Account no.")
+                            ? const Text("Account no.")
                             : (flag == 4
-                                ? Text("IFSC Code")
+                                ? const Text("IFSC Code")
                                 : (flag == 5
-                                    ? Text("Variety")
+                                    ? const Text("Variety")
                                     : (flag == 6
-                                        ? Text("Size of nursery(in hectares)")
+                                        ? const Text(
+                                            "Size of nursery(in metresq)")
                                         : null))))),
                 //this is the text field for filling the new hostel name or Room no
                 content: flag == 1
@@ -450,7 +464,7 @@ class _SellerProfileState extends State<SellerProfile> {
                                         controller: controller,
                                         onChanged: (value) {
                                           setState(() {
-                                            tempvariety = value;
+                                            tempvariety = int.parse(value);
                                           });
                                         },
                                       )
@@ -464,7 +478,7 @@ class _SellerProfileState extends State<SellerProfile> {
                                             controller: controller,
                                             onChanged: (value) {
                                               setState(() {
-                                                tempsize = value;
+                                                tempsize = int.parse(value);
                                               });
                                             },
                                           )
@@ -474,14 +488,20 @@ class _SellerProfileState extends State<SellerProfile> {
                   TextButton(
                     child: const Text('Submit'),
                     onPressed: () {
-                      submit(flag);
+                      submit(flag, seller);
                     },
                   ),
                 ],
               ));
 
-  void submit(var flag) {
+  void submit(var flag, Seller seller) {
     setState(() {
+      mobileNo = seller.phoneNo!;
+      address = seller.address!;
+      accountNo = seller.bankAccountNumber!;
+      ifscCode = seller.ifscCode!;
+      variety = seller.variety!;
+      size = seller.sizeOfNursery!;
       if (flag == 1) {
         mobileNo = tempmobileNo;
       } else if (flag == 2) {
@@ -496,25 +516,33 @@ class _SellerProfileState extends State<SellerProfile> {
         size = tempsize;
       }
     });
-    // AuthMethods().changeState("hostel", hostel, userMap);
-    // AuthMethods().changeState("roomNo", roomNo, userMap);
-    // loadUserData();
+    Map<String, dynamic> map = seller.getData();
+    AuthMethods().changeState("seller", "phoneNo", mobileNo, map);
+    AuthMethods().changeState("seller", "address", address, map);
+    AuthMethods().changeState("seller", "bankAccountNumber", accountNo, map);
+    AuthMethods().changeState("seller", "ifscCode", ifscCode, map);
+    AuthMethods().changeState("seller", "variety", variety, map);
+    AuthMethods().changeState("seller", "sizeOfNursery", size, map);
+    loadUserData();
     Navigator.of(context).pop(controller.text);
     controller.clear();
   }
 
   loadUserData() async {
-    BuyerProvider userProvider = Provider.of(context, listen: false);
-    await userProvider.refreshUser();
+    SellerProvider userProvider = Provider.of(context, listen: false);
+    await userProvider.refreshSeller();
   }
 
-  uploadImage() async {
+  uploadImage(Seller seller) async {
     Uint8List im = await pickImage(ImageSource.gallery);
-    // String tempProfileURL = await StorageMethods()
-    //     .uploadImageToStorage("profilePic", im, false, null);
-    // setState(() {
-    //   profileURL = tempProfileURL;
-    //   AuthMethods().changeState("profileURL", profileURL!, userMap);
-    // });
+    String tempProfileURL = await StorageMethods()
+        .uploadImageToStorage("profilePic", im, false, null);
+    setState(() {
+      profileURL = tempProfileURL;
+    });
+    print('hello');
+    print(tempProfileURL);
+    AuthMethods()
+        .changeState("seller", "profileURL", tempProfileURL, seller.getData());
   }
 }

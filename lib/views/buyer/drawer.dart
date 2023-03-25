@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mandrake/views/about_page.dart';
 
 import '../../utils/global_colors.dart';
 
@@ -79,10 +78,10 @@ class Drawer extends StatelessWidget {
             style: TextStyle(fontSize: 20),
           ),
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const AboutPage()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const AboutPage()),
+            // );
           },
         ),
         const ListTile(

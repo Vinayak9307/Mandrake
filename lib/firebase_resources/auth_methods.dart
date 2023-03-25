@@ -151,7 +151,7 @@ class AuthMethods {
     return res;
   }
 
-  Future<String> changeState(String collection, String key, String value,
+  Future<String> changeState(String collection, String key, dynamic value,
       Map<String, dynamic> userMap) async {
     String res = "Some Error Occured";
     try {
