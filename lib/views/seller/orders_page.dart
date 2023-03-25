@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mandrake/utils/global_colors.dart';
-import 'package:mandrake/utils/orders_card.dart';
 // import 'package:mandrake/views/user/drawer.dart';
 import 'package:mandrake/providers/seller_provider.dart';
+
+import '../../utils/allCards.dart';
 // import 'package:querium/models/user.dart' as model;
 
 class OrdersPage extends StatefulWidget {
