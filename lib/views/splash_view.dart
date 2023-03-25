@@ -55,8 +55,9 @@ class _SplashViewState extends State<SplashView> {
         .doc(FirebaseAuth.instance.currentUser!.uid);
     DocumentSnapshot snap = await ref.get();
     Map<String, dynamic> map = snap.data() as Map<String, dynamic>;
+    print(map['type']);
 
-    if (map['type'] == 'users') {
+    if (map['type'] == 'user') {
       await buyerProvider.refreshUser();
     } else {
       await sellerProvider.refreshSeller();

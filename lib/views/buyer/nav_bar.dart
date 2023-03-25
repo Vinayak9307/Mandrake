@@ -1,11 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mandrake/views/buyer/create_post.dart';
 import 'package:mandrake/views/buyer/profile.dart';
 import '../../utils/global_colors.dart';
+import 'ask_help.dart';
 import 'buyer_feed.dart';
-import 'cart.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
