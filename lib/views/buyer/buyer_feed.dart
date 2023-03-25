@@ -5,8 +5,8 @@ import 'package:mandrake/model/buyer.dart';
 import 'package:mandrake/providers/buyer_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/allCards.dart';
 import '../../utils/global_colors.dart';
-import '../../utils/item_card.dart';
 
 class BuyerFeed extends StatefulWidget {
   const BuyerFeed({super.key});

@@ -1,11 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mandrake/views/buyer/profile.dart';
-import 'package:mandrake/views/seller/catalog.dart';
-import 'package:mandrake/views/seller/profile.dart';
+import 'package:mandrake/views/seller/catalogue.dart';
+import 'package:mandrake/views/seller/seller_profile.dart';
 import '../../utils/global_colors.dart';
-import '../buyer/buyer_feed.dart';
 import '../buyer/cart.dart';
 
 class SellerNavBar extends StatefulWidget {
@@ -16,7 +14,7 @@ class SellerNavBar extends StatefulWidget {
 
 class _SellerNavBarState extends State<SellerNavBar> {
   int _selectedIndex = 0;
-  final Widget _catalog = const Catalog();
+  final Widget _catalog = const Catalogue();
   final Widget _profile = const SellerProfile();
   final Widget _cart = const Cart();
 
