@@ -57,7 +57,7 @@ class _BuyerFeedState extends State<BuyerFeed> {
               child: CircularProgressIndicator(),
             )
           : Center(
-              child: Text(buyer.username!),
+              child: Text(buyer.posts![0]),
             ),
     );
   }
