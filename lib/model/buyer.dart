@@ -7,17 +7,21 @@ class Buyer {
   String? profileURL;
   String? email;
   String? phoneNo;
+  String? address;
   String? orders;
   String? cart;
+  List? posts;
 
   Buyer({
     this.uid,
     this.username,
     this.email,
+    this.address,
     this.profileURL,
     this.phoneNo,
     this.orders,
     this.cart,
+    this.posts,
   });
 
   //This function returns a map of data related to the user object
@@ -27,8 +31,10 @@ class Buyer {
         "email": email,
         "profileURL": profileURL,
         "phoneNo": phoneNo,
+        "address": address,
         "orders": orders,
         "cart": cart,
+        "posts": posts,
       };
 
   //This method returns a user instance based on the document snapshot given by firebase authentication
@@ -43,6 +49,8 @@ class Buyer {
       phoneNo: map['phoneNo'],
       orders: map['orders'],
       cart: map['cart'],
+      address: map['address'],
+      posts: map['posts'],
     );
   }
 }

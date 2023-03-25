@@ -9,7 +9,7 @@ import 'package:mandrake/views/buyer/login_view.dart';
 import 'package:mandrake/views/buyer/signup_view.dart';
 import 'package:mandrake/views/onboarding.dart';
 // import 'package:mandrake/views/seller/profile.dart';
-// import 'package:mandrake/views/splash_view.dart';
+import 'package:mandrake/views/splash_view.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const CreatePost(),
+        home: const SplashView(),
       ),
     );
   }

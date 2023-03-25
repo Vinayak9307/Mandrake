@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:mandrake/providers/buyer_provider.dart';
 import 'package:mandrake/views/buyer/signup_view.dart';
+import 'package:mandrake/views/seller/seller_nav_bar.dart';
+import 'package:mandrake/views/seller/seller_signup_view.dart';
 import 'package:provider/provider.dart';
 import '../../firebase_resources/auth_methods.dart';
 import '../../utils/button_global.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/utils.dart';
-import 'nav_bar.dart';
 
-class BuyerLoginView extends StatefulWidget {
-  const BuyerLoginView({super.key});
+class SellerLoginView extends StatefulWidget {
+  const SellerLoginView({super.key});
 
   @override
-  State<BuyerLoginView> createState() => _BuyerLoginViewState();
+  State<SellerLoginView> createState() => _SellerLoginViewState();
 }
 
-class _BuyerLoginViewState extends State<BuyerLoginView> {
+class _SellerLoginViewState extends State<SellerLoginView> {
   String? email = "";
   String? password = "";
 
@@ -34,11 +35,14 @@ class _BuyerLoginViewState extends State<BuyerLoginView> {
     setState(() {
       isLoading = true;
     });
-    String res = await AuthMethods().loginUser(
+
+    String res = await AuthMethods().loginAdmin(
       email: email!,
       password: password!,
     );
-
+    // // ignore: use_build_context_synchronously
+    // BuyerProvider buyerProvider = Provider.of(context, listen: false);
+    // await buyerProvider.refreshUser();
     setState(() {
       isLoading = false;
     });
@@ -48,15 +52,14 @@ class _BuyerLoginViewState extends State<BuyerLoginView> {
       });
     } else {
       print("go to feed");
-      setState(() {
-        Navigator.pop(context, '/onBoard');
-      });
-      setState(() {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const NavBar()),
-        );
-      });
+      //ignore: use_build_context_synchronously
+      Navigator.pop(context, '/onBoard');
+
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const SellerNavBar()),
+      );
     }
   }
 
@@ -97,7 +100,7 @@ class _BuyerLoginViewState extends State<BuyerLoginView> {
                     height: 50,
                   ),
                   Text(
-                    "Login to your account",
+                    "Login to your account : Seller",
                     style: TextStyle(
                       color: GlobalColor.textColor,
                       fontSize: 20,
@@ -248,7 +251,7 @@ class _BuyerLoginViewState extends State<BuyerLoginView> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const BuyerSignUpView()),
+                      builder: (context) => const SellerSignUpView()),
                 );
               },
               child: const Text(

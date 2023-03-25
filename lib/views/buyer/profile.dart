@@ -32,7 +32,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
+        title: const Text("Profile"),
         centerTitle: true,
         elevation: 0,
         backgroundColor: const Color(0xFF0C9869),
@@ -64,9 +64,10 @@ class _ProfileState extends State<Profile> {
                               bottomRight: Radius.circular(36))),
                     ),
                     Positioned(
-                      left: 150,
-                      right: 0,
-                      top: 60,
+                      left: MediaQuery.of(context).size.width * 0.5 - 60,
+                      // right: 0,
+                      // top: 60,
+                      bottom: 0,
                       child: Stack(children: [
                         Container(
                           child: const CircleAvatar(
@@ -77,14 +78,14 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         Positioned(
-                          bottom: 8,
-                          right: 155,
+                          bottom: 0,
+                          right: 0,
                           child: Container(
                             width: 35,
                             height: 35,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100),
-                              color: Color(0xFF0C9869),
+                              color: const Color(0xFF0C9869),
                             ),
                             child: GestureDetector(
                               child: const Icon(
