@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mandrake/providers/buyer_provider.dart';
-import 'package:mandrake/views/buyer/signup_view.dart';
 import 'package:mandrake/views/seller/seller_nav_bar.dart';
 import 'package:mandrake/views/seller/seller_signup_view.dart';
-import 'package:provider/provider.dart';
 import '../../firebase_resources/auth_methods.dart';
 import '../../utils/button_global.dart';
 import '../../utils/global_colors.dart';
@@ -52,14 +49,16 @@ class _SellerLoginViewState extends State<SellerLoginView> {
       });
     } else {
       print("go to feed");
-      //ignore: use_build_context_synchronously
-      Navigator.pop(context, '/onBoard');
+      setState(() {
+        Navigator.pop(context, '/onBoard');
 
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const SellerNavBar()),
-      );
+        //ignore: use_build_context_synchronously
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const SellerNavBar()),
+        );
+      });
+      //ignore: use_build_context_synchronously
     }
   }
 

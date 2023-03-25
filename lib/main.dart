@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mandrake/model/seller.dart';
 import 'package:mandrake/providers/buyer_provider.dart';
+import 'package:mandrake/providers/seller_provider.dart';
 import 'package:mandrake/views/buyer/buyer_feed.dart';
 import 'package:mandrake/views/buyer/login_view.dart';
 import 'package:mandrake/views/buyer/profile.dart';
@@ -31,9 +33,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => BuyerProvider(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (_) => AdminProvider(),
-        // ),
+        ChangeNotifierProvider(
+          create: (_) => SellerProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Mandrake',

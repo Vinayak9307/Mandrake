@@ -8,13 +8,15 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<Buyer> getUserDetails(String collection) async {
+  Future<dynamic> getUserDetails(String collection) async {
     User currentUser = _auth.currentUser!;
 
     DocumentSnapshot snapshot =
         await _firestore.collection(collection).doc(currentUser.uid).get();
-
-    return Buyer.getUser(snapshot);
+    if (collection == 'users') {
+      return Buyer.getUser(snapshot);
+    }
+    return Seller.getUser(snapshot);
   }
 
   Future<String> signUpUser({
@@ -70,6 +72,9 @@ class AuthMethods {
     required String ifscCode,
     required int variety,
     required int sizeOfNursery,
+    required String country,
+    required String state,
+    required String city,
   }) async {
     String res = "Some error occured";
     try {
@@ -94,6 +99,7 @@ class AuthMethods {
           ifscCode: ifscCode,
           variety: variety,
           sizeOfNursery: sizeOfNursery,
+          catalog: [],
           approved: false,
         );
 
@@ -106,7 +112,7 @@ class AuthMethods {
             .doc(cred.user!.uid)
             .set({'type': "seller"});
       }
-      res = "Requested";
+      res = "Sign Up Success";
     } catch (err) {
       res = err.toString();
     }
