@@ -57,112 +57,6 @@ class _BuyerFeedState extends State<BuyerFeed> {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height,
-<<<<<<< HEAD
-                    child: ListView.builder(
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.2,
-                              child: Stack(
-                                children: <Widget>[
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                            0.2 -
-                                        10,
-                                    decoration: const BoxDecoration(
-                                        color: GlobalColor.mainColor,
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(36),
-                                            bottomRight: Radius.circular(36))),
-                                    child: Row(
-                                      children: <Widget>[
-                                        const Padding(
-                                          padding: EdgeInsets.only(left: 18),
-                                          child: Text('Mandrake',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 35)),
-                                        ),
-                                        const Spacer(),
-                                        Image.asset(
-                                          "assets/images/logo.png",
-                                          scale: 1.3,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 0,
-                                    left: 0,
-                                    right: 0,
-                                    child: Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      height: 54,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                offset: const Offset(0, 10),
-                                                blurRadius: 50,
-                                                color: GlobalColor.mainColor
-                                                    .withOpacity(0.23))
-                                          ]),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 4, left: 8),
-                                        child: Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: TextField(
-                                                decoration: InputDecoration(
-                                                  hintText: 'Search',
-                                                  hintStyle: TextStyle(
-                                                    color: GlobalColor.mainColor
-                                                        .withOpacity(0.5),
-                                                  ),
-                                                  enabledBorder:
-                                                      InputBorder.none,
-                                                  focusedBorder:
-                                                      InputBorder.none,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: SvgPicture.asset(
-                                                  "assets/icons/search.svg"),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          }
-                          if (index == 9) return const SizedBox(height: 150);
-                          return Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                FeedCard(),
-                                Spacer(),
-                                FeedCard(),
-                              ],
-                            ),
-                          );
-                        }),
-                  ),
-                  SizedBox(
-=======
                     child: StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('catalogitems')
@@ -284,7 +178,6 @@ class _BuyerFeedState extends State<BuyerFeed> {
                     ),
                   ),
                   const SizedBox(
->>>>>>> 6bb313336c0f17f9bda4be6844707053175b0c3f
                     height: 500,
                   )
                 ],
