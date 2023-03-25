@@ -13,6 +13,9 @@ import 'package:mandrake/views/seller/profile.dart';
 import 'package:mandrake/views/splash_view.dart';
 import 'package:provider/provider.dart';
 
+import 'views/seller/catalogue.dart';
+import 'views/seller/catalogue_item_detail.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -47,7 +50,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         debugShowCheckedModeBanner: false,
-        home: const SplashView(),
+        home: const Catalogue(),
       ),
     );
   }
