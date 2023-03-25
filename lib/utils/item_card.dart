@@ -14,8 +14,12 @@ class FeedCard extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.3,
       child: InkWell(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ItemDetail()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ItemDetail(
+                        snap: snap,
+                      )));
         },
         child: Column(
           children: <Widget>[

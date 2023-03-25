@@ -1,3 +1,4 @@
+import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:mandrake/views/seller/seller_login_view.dart';
 
@@ -25,6 +26,9 @@ class _SellerSignUpViewState extends State<SellerSignUpView> {
   int? sizeOfNursery;
   String? password = "";
   String? confirmPassword = "";
+  String? country = "";
+  String? state = "";
+  String? city = "";
 
   final formKey = GlobalKey<FormState>();
   bool isLoading = false;
@@ -44,19 +48,25 @@ class _SellerSignUpViewState extends State<SellerSignUpView> {
       accountNo: accountNo!,
       variety: variety!,
       sizeOfNursery: sizeOfNursery!,
+      country: country!,
+      state: state!,
+      city: state!,
     );
     setState(() {
       isLoading = false;
     });
     if (res != "Requested") {
-      // ignore: use_build_context_synchronously
-      showSnackBar(context, res);
+      setState(() {
+        showSnackBar(context, res);
+      });
     } else {
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const SellerLoginView()),
-      );
+      setState(() {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const SellerLoginView()),
+        );
+      });
     }
   }
 
@@ -277,6 +287,23 @@ class _SellerSignUpViewState extends State<SellerSignUpView> {
                 ),
                 const SizedBox(
                   height: 40,
+                ),
+                SelectState(
+                  onCountryChanged: (value) {
+                    setState(() {
+                      country = value;
+                    });
+                  },
+                  onStateChanged: (value) {
+                    setState(() {
+                      state = value;
+                    });
+                  },
+                  onCityChanged: (value) {
+                    setState(() {
+                      city = value;
+                    });
+                  },
                 ),
                 //Address Box
                 TextFormField(

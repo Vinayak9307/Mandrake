@@ -169,7 +169,3 @@ class CardView extends StatelessWidget {
     );
   }
 }
-
-// child: LinkButton(
-//                       urlLabel: "Terms and Conditions",
-//                       url: "https://example.com/terms-and-conditions", required childa),

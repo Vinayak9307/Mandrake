@@ -6,6 +6,7 @@ class CatalogItem {
   String? itemName;
   String? profileURL;
   String? sellerInfo;
+  String? sellerId;
   String? description;
   String? quantity;
   String? price;
@@ -15,6 +16,7 @@ class CatalogItem {
     this.itemName,
     this.sellerInfo,
     this.price,
+    this.sellerId,
     this.profileURL,
     this.description,
     this.quantity,
@@ -29,6 +31,7 @@ class CatalogItem {
         "description": description,
         "price": price,
         "quantity": quantity,
+        "sellerId": sellerId,
       };
 
   //This method returns a user instance based on the document snapshot given by firebase authentication
@@ -43,6 +46,7 @@ class CatalogItem {
       description: map['description'],
       price: map['price'],
       quantity: map['quantity'],
+      sellerId: map['sellerId'],
     );
   }
 }

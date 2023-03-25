@@ -1,18 +1,18 @@
-// import 'package:flutter/material.dart';
-// import 'package:querium/resources/auth_methods.dart';
+import 'package:flutter/material.dart';
+import 'package:mandrake/model/seller.dart';
 
-// import '../models/admin.dart';
+import '../firebase_resources/auth_methods.dart';
 
-// //This class is used as the singleton class for the user
-// //It provides the user object
-// class AdminProvider with ChangeNotifier {
-//   Admin? _admin;
+//This class is used as the singleton class for the user
+//It provides the user object
+class SellerProvider with ChangeNotifier {
+  Seller? _seller;
 
-//   Admin get getAdmin => _admin!;
+  Seller get getseller => _seller!;
 
-//   Future<void> refreshAdmin() async {
-//     Admin admin = await AuthMethods().getAdminDetails();
-//     _admin = admin;
-//     notifyListeners();
-//   }
-// }
+  Future<void> refreshSeller() async {
+    Seller seller = await AuthMethods().getUserDetails('seller');
+    _seller = seller;
+    notifyListeners();
+  }
+}

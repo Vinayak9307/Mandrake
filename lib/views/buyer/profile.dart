@@ -121,7 +121,7 @@ class _ProfileState extends State<Profile> {
                 height: 30,
               ),
 
-              //this is a card which contains listtile of hostel
+              
               Card(
                 elevation: 5,
                 child: ListTile(
@@ -149,7 +149,7 @@ class _ProfileState extends State<Profile> {
                 height: 30,
               ),
 
-              //this is a card which contains listtile of hostel
+              
               Card(
                 elevation: 5,
                 child: ListTile(
