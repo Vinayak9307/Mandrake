@@ -28,6 +28,7 @@ class _SplashViewState extends State<SplashView> {
     BuyerProvider buyerProvider = Provider.of(context, listen: false);
     Future.wait([
       getUserData(buyerProvider),
+      Future.delayed(const Duration(milliseconds: 3000)),
     ]).then((snapshot) {
       String user = snapshot.first;
       Widget next = user == "onBoard"
