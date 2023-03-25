@@ -17,8 +17,8 @@ class Drawer extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20, left: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
+            children: const [
+              SizedBox(
                 height: 20,
               ),
               SizedBox(
@@ -27,7 +27,7 @@ class Drawer extends StatelessWidget {
                 //         radius: 50,
                 //         backgroundImage: NetworkImage(profileURL!),
                 //       )
-                child: const CircleAvatar(
+                child: CircleAvatar(
                   radius: 50,
                   backgroundImage: AssetImage("assets/images/index.png"),
                 ),
@@ -44,26 +44,26 @@ class Drawer extends StatelessWidget {
               //     ),
               //   ),
               // ),
-              const SizedBox(
+              SizedBox(
                 height: 5,
               ),
               Text(
                 "name",
-                style: const TextStyle(color: Colors.white, fontSize: 15),
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 5,
               ),
               Text(
                 "regNo",
-                style: const TextStyle(color: Colors.white, fontSize: 15),
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 5,
               ),
               Text(
                 "email",
-                style: const TextStyle(color: Colors.white, fontSize: 15),
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ],
           ),
@@ -85,12 +85,12 @@ class Drawer extends StatelessWidget {
             );
           },
         ),
-        ListTile(
-          leading: const Icon(
+        const ListTile(
+          leading: Icon(
             Icons.logout,
             size: 20,
           ),
-          title: const Text(
+          title: Text(
             'Log Out',
             style: TextStyle(fontSize: 20),
           ),

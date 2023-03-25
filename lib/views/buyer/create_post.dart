@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../utils/button_global.dart';
-import '../../utils/drop_down_items.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/utils.dart';
 
@@ -26,7 +25,7 @@ class _CreatePostState extends State<CreatePost> {
   void showImage() async {
     Uint8List im = await pickImage(ImageSource.gallery);
     setState(() {
-      if (_imgList.length == 0) {
+      if (_imgList.isEmpty) {
         _imgList.add(im);
       } else {
         _imgList[0] = im;
@@ -254,7 +253,7 @@ class _CreatePostState extends State<CreatePost> {
                     },
                     isLoading: isLoading,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   )
                 ],
