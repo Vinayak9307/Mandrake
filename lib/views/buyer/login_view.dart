@@ -38,9 +38,7 @@ class _BuyerLoginViewState extends State<BuyerLoginView> {
       email: email!,
       password: password!,
     );
-    // ignore: use_build_context_synchronously
-    BuyerProvider buyerProvider = Provider.of(context, listen: false);
-    await buyerProvider.refreshUser();
+
     setState(() {
       isLoading = false;
     });
