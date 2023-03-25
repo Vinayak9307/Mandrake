@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mandrake/views/seller/login_view_admin.dart';
+import 'package:mandrake/views/seller/seller_login_view.dart';
 import '../utils/button_global.dart';
 import '../utils/global_colors.dart';
 import 'buyer/login_view.dart';
