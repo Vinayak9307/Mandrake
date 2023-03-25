@@ -43,7 +43,7 @@ class _CreatePostState extends State<CreatePost> {
           elevation: 0,
           centerTitle: true,
           title: const Text(
-            "Add a Post",
+            "Ask for Help",
             style: TextStyle(
               fontSize: 22,
               color: Colors.white,
