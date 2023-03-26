@@ -114,7 +114,7 @@ class FirestoreMethods {
 
     try {
       imgURL = await StorageMethods()
-          .uploadImageToStorage('complaints', images, false, null);
+          .uploadImageToStorage('catalogProfile', images, false, null);
 
       CatalogueItem catalogueItem = CatalogueItem(
         uid: uid,

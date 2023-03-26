@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mandrake/views/buyer/drawer.dart';
 import 'package:provider/provider.dart';
 import '../../firebase_resources/auth_methods.dart';
 import '../../firebase_resources/storage_methods.dart';
 import '../../model/buyer.dart';
 import '../../providers/buyer_provider.dart';
 import '../../utils/utils.dart';
+import '../drawer.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -51,8 +51,10 @@ class _ProfileState extends State<Profile> {
       drawer: Drawer(
         child: SingleChildScrollView(
           child: Column(
-            children: const [
-              Drawerr(),
+            children: [
+              Drawerr(
+                snap: buyer.getData(),
+              ),
             ],
           ),
         ),

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mandrake/utils/global_colors.dart';
 
+import '../../firebase_resources/auth_methods.dart';
+
 class CatalogueItemDetail extends StatefulWidget {
-  const CatalogueItemDetail({super.key});
+  const CatalogueItemDetail({super.key, required this.snap});
+  final snap;
 
   @override
   State<CatalogueItemDetail> createState() => _CatalogueItemDetailState();
@@ -23,8 +26,8 @@ class _CatalogueItemDetailState extends State<CatalogueItemDetail> {
     super.dispose();
   }
 
-  String price = "22";
-  String Quantity = "22";
+  String price = "0";
+  String Quantity = "0";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +51,7 @@ class _CatalogueItemDetailState extends State<CatalogueItemDetail> {
                     Icons.format_list_numbered_outlined,
                     size: 30,
                   ),
-                  subtitle: Text(Quantity,
+                  subtitle: Text(widget.snap['quantity'].toString(),
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   title: const Text('Quantity'),
@@ -72,7 +75,7 @@ class _CatalogueItemDetailState extends State<CatalogueItemDetail> {
                     Icons.price_change_outlined,
                     size: 30,
                   ),
-                  subtitle: Text(price,
+                  subtitle: Text(widget.snap['price'].toString(),
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   title: const Text('Price'),
@@ -105,11 +108,20 @@ class _CatalogueItemDetailState extends State<CatalogueItemDetail> {
                   ? InputDecoration(hintText: "Enter new quantity")
                   : InputDecoration(hintText: "Enter new price"),
             ),
-            actions: [TextButton(onPressed: submit, child: Text('Submit'))],
+            actions: [
+              TextButton(
+                onPressed: submit,
+                child: Text('Submit'),
+              ),
+            ],
           ));
 
   void submit() {
     Navigator.of(context).pop(controler.text);
+    AuthMethods().changeState(
+        "catalogueItem", "quantity", int.parse(Quantity), widget.snap);
+    AuthMethods()
+        .changeState("catalogueItem", "price", int.parse(price), widget.snap);
     controler.clear();
   }
 }

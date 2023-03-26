@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/allCards.dart';
 import '../../utils/global_colors.dart';
-import 'drawer.dart';
+import '../drawer.dart';
 
 class BuyerFeed extends StatefulWidget {
   const BuyerFeed({super.key});
@@ -52,8 +52,10 @@ class _BuyerFeedState extends State<BuyerFeed> {
       drawer: Drawer(
         child: SingleChildScrollView(
           child: Column(
-            children: const [
-              Drawerr(),
+            children: [
+              Drawerr(
+                snap: buyer.getData(),
+              ),
             ],
           ),
         ),
@@ -102,8 +104,8 @@ class _BuyerFeedState extends State<BuyerFeed> {
                                                 bottomRight:
                                                     Radius.circular(36))),
                                         child: Row(
-                                          children: <Widget>[
-                                            const Padding(
+                                          children: const <Widget>[
+                                            Padding(
                                               padding:
                                                   EdgeInsets.only(left: 18),
                                               child: Text('Mandrake',
@@ -114,64 +116,64 @@ class _BuyerFeedState extends State<BuyerFeed> {
                                                       fontSize: 35)),
                                             ),
                                             Spacer(),
-                                            Image.asset(
-                                              "assets/images/logo.png",
-                                              scale: 1.3,
-                                            )
+                                            // Image.asset(
+                                            //   "assets/images/logo.png",
+                                            //   scale: 1.3,
+                                            // )
                                           ],
                                         ),
                                       ),
-                                      Positioned(
-                                        bottom: 0,
-                                        left: 0,
-                                        right: 0,
-                                        child: Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 20),
-                                          height: 54,
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    offset: Offset(0, 10),
-                                                    blurRadius: 50,
-                                                    color: GlobalColor.mainColor
-                                                        .withOpacity(0.23))
-                                              ]),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 4, left: 8),
-                                            child: Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                  child: TextField(
-                                                    decoration: InputDecoration(
-                                                      hintText: 'Search',
-                                                      hintStyle: TextStyle(
-                                                        color: GlobalColor
-                                                            .mainColor
-                                                            .withOpacity(0.5),
-                                                      ),
-                                                      enabledBorder:
-                                                          InputBorder.none,
-                                                      focusedBorder:
-                                                          InputBorder.none,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: SvgPicture.asset(
-                                                      "assets/icons/search.svg"),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      )
+                                      // Positioned(
+                                      //   bottom: 0,
+                                      //   left: 0,
+                                      //   right: 0,
+                                      // child: Container(
+                                      //   margin: const EdgeInsets.symmetric(
+                                      //       horizontal: 20),
+                                      //   height: 54,
+                                      //   decoration: BoxDecoration(
+                                      //       color: Colors.white,
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(20),
+                                      //       boxShadow: [
+                                      //         BoxShadow(
+                                      //             offset: Offset(0, 10),
+                                      //             blurRadius: 50,
+                                      //             color: GlobalColor.mainColor
+                                      //                 .withOpacity(0.23))
+                                      //       ]),
+                                      // child: Padding(
+                                      //   padding: const EdgeInsets.only(
+                                      //       top: 4, left: 8),
+                                      //   child: Row(
+                                      //     children: <Widget>[
+                                      //       Expanded(
+                                      //         child: TextField(
+                                      //           decoration: InputDecoration(
+                                      //             hintText: 'Search',
+                                      //             hintStyle: TextStyle(
+                                      //               color: GlobalColor
+                                      //                   .mainColor
+                                      //                   .withOpacity(0.5),
+                                      //             ),
+                                      //             enabledBorder:
+                                      //                 InputBorder.none,
+                                      //             focusedBorder:
+                                      //                 InputBorder.none,
+                                      //           ),
+                                      //         ),
+                                      //       ),
+                                      //       Padding(
+                                      //         padding:
+                                      //             const EdgeInsets.all(8.0),
+                                      //         child: SvgPicture.asset(
+                                      //             "assets/icons/search.svg"),
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
+                                      //   ),
+                                      // )
                                     ],
                                   ),
                                 );

@@ -24,7 +24,9 @@ class CatalogueCard extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const CatalogueItemDetail()));
+                    builder: (context) => CatalogueItemDetail(
+                          snap: snap,
+                        )));
           },
           child: Column(
             children: <Widget>[

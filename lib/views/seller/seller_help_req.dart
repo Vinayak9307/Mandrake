@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mandrake/model/seller.dart';
+import 'package:mandrake/providers/seller_provider.dart';
 import 'package:mandrake/utils/global_colors.dart';
+import 'package:mandrake/views/seller/seller_profile.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/allCards.dart';
+import '../drawer.dart';
 // import 'package:querium/models/user.dart' as model;
 
 class HelpRequestPage extends StatefulWidget {
@@ -14,6 +19,8 @@ class HelpRequestPage extends StatefulWidget {
 }
 
 class _HelpRequestPageState extends State<HelpRequestPage> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -30,8 +37,20 @@ class _HelpRequestPageState extends State<HelpRequestPage> {
   @override
   Widget build(BuildContext context) {
     //model.User user = Provider.of<UserProvider>(context).getUser;
-
+    Seller seller = Provider.of<SellerProvider>(context).getseller;
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Drawerr(
+                snap: seller.getData(),
+              ),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: GlobalColor.mainColor,
         title: const Text(
@@ -80,15 +99,6 @@ class _HelpRequestPageState extends State<HelpRequestPage> {
       //         });
       //   },
       // ),
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Column(
-            children: const [
-              Drawer(),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

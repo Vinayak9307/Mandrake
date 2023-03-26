@@ -13,7 +13,7 @@ import '../../model/buyer.dart';
 import '../../utils/button_global.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/utils.dart';
-import 'drawer.dart';
+import '../drawer.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -305,8 +305,10 @@ class _CreatePostState extends State<CreatePost> {
         drawer: Drawer(
           child: SingleChildScrollView(
             child: Column(
-              children: const [
-                Drawerr(),
+              children: [
+                Drawerr(
+                  snap: buyer.getData(),
+                ),
               ],
             ),
           ),

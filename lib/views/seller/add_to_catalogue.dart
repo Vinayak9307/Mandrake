@@ -15,6 +15,7 @@ import '../../model/seller.dart';
 import '../../utils/button_global.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/utils.dart';
+import '../drawer.dart';
 
 class AddCatalogue extends StatefulWidget {
   const AddCatalogue({super.key});
@@ -24,6 +25,8 @@ class AddCatalogue extends StatefulWidget {
 }
 
 class _AddCatalogueState extends State<AddCatalogue> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   String? selectedCategory = '';
   String? title = '';
   String? description = '';
@@ -81,6 +84,7 @@ class _AddCatalogueState extends State<AddCatalogue> {
     return GestureDetector(
       onTap: () => {FocusScope.of(context).requestFocus(FocusNode())},
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: GlobalColor.mainColor,
           elevation: 0,
@@ -91,6 +95,17 @@ class _AddCatalogueState extends State<AddCatalogue> {
               fontSize: 22,
               color: Colors.white,
               fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+        drawer: Drawer(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Drawerr(
+                  snap: seller.getData(),
+                ),
+              ],
             ),
           ),
         ),
@@ -441,7 +456,6 @@ class _AddCatalogueState extends State<AddCatalogue> {
             ),
           ),
         ),
-        drawer: const Drawer(),
       ),
     );
   }

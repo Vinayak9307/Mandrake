@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mandrake/firebase_resources/auth_methods.dart';
+import 'package:mandrake/views/onboarding.dart';
 
 import '../../utils/global_colors.dart';
 
 class Drawerr extends StatelessWidget {
-  const Drawerr({super.key});
+  const Drawerr({super.key, required this.snap});
+  final snap;
 
   logOutUser() {
     AuthMethods().logoutUser();
@@ -21,20 +23,20 @@ class Drawerr extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20, left: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               SizedBox(
                 height: 20,
               ),
               SizedBox(
-                // child: profileURL != null
-                //     ? CircleAvatar(
-                //         radius: 50,
-                //         backgroundImage: NetworkImage(profileURL!),
-                //       )
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage("assets/images/index.png"),
-                ),
+                child: snap['profileURL'] != null
+                    ? CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(snap['profileURL']),
+                      )
+                    : const CircleAvatar(
+                        radius: 50,
+                        backgroundImage: AssetImage("assets/images/index.png"),
+                      ),
               ),
               // Container(
               //   margin: const EdgeInsets.only(bottom: 10),
@@ -52,21 +54,21 @@ class Drawerr extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                "name",
+                snap['username'],
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
               SizedBox(
                 height: 5,
               ),
               Text(
-                "regNo",
+                snap['email'],
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
               SizedBox(
                 height: 5,
               ),
               Text(
-                "email",
+                snap['phoneNo'],
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ],
@@ -74,16 +76,22 @@ class Drawerr extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         ListTile(
-          leading: const Icon(
-            Icons.logout,
-            size: 20,
-          ),
-          title: const Text(
-            'Log Out',
-            style: TextStyle(fontSize: 20),
-          ),
-          onTap: logOutUser,
-        ),
+            leading: const Icon(
+              Icons.logout,
+              size: 20,
+            ),
+            title: const Text(
+              'Log Out',
+              style: TextStyle(fontSize: 20),
+            ),
+            onTap: () {
+              logOutUser();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const OnBoarding(),
+                  ));
+            }),
       ],
     );
   }

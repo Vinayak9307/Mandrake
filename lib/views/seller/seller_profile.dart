@@ -11,6 +11,7 @@ import '../../firebase_resources/storage_methods.dart';
 import '../../model/seller.dart';
 import '../../providers/buyer_provider.dart';
 import '../../utils/utils.dart';
+import '../drawer.dart';
 
 class SellerProfile extends StatefulWidget {
   const SellerProfile({super.key});
@@ -20,6 +21,7 @@ class SellerProfile extends StatefulWidget {
 }
 
 class _SellerProfileState extends State<SellerProfile> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   String? profileURL = "";
   String mobileNo = "";
   String address = "";
@@ -60,6 +62,7 @@ class _SellerProfileState extends State<SellerProfile> {
   Widget build(BuildContext context) {
     Seller seller = Provider.of<SellerProvider>(context).getseller;
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: const Text("Profile"),
         centerTitle: true,
@@ -67,7 +70,18 @@ class _SellerProfileState extends State<SellerProfile> {
         backgroundColor: const Color(0xFF0C9869),
         leading: IconButton(
           icon: SvgPicture.asset("assets/images/menu.svg"),
-          onPressed: () {},
+          onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+        ),
+      ),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Drawerr(
+                snap: seller.getData(),
+              ),
+            ],
+          ),
         ),
       ),
       body: GestureDetector(
